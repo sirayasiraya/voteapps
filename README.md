@@ -1,3 +1,36 @@
 Example Voting App
 =========
-This is a sample voting app.
+
+Getting started
+---------------
+
+Download [Docker](https://www.docker.com/products/overview).   
+If you are on Mac or Windows, [Docker Compose](https://docs.docker.com/compose) will be automatically installed.   
+On Linux, make sure you have the latest version of [Compose](https://docs.docker.com/compose/install/).   
+If you're using [Docker for Windows](https://docs.docker.com/docker-for-windows/) on Windows 10 pro or later, you must also [switch to Linux containers](https://docs.docker.com/docker-for-windows/#switch-between-windows-and-linux-containers).
+
+Run in this directory :
+```
+docker-compose up
+```
+The app will be running at [http://localhost:5000](http://localhost:5000), and the results will be at [http://localhost:5001](http://localhost:5001).
+
+
+The vote interface is then available on port 31000 on each host of the cluster, the result one is available on port 31001.
+
+Architecture
+-----
+
+![Architecture diagram](architecture.png)
+
+* A Python webapp which lets you vote between two options
+* A Redis queue which collects new votes
+* A .NET worker which consumes votes and stores them in…
+* A Postgres database backed by a Docker volume
+* A Node.js webapp which shows the results of the voting in real time
+
+
+Note
+----
+
+The voting application only accepts one vote per client. It does not register votes if a vote has already been submitted from a client.
